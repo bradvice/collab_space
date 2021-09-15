@@ -31,3 +31,12 @@ p {
   margin: 4px;
   justify-content: flex-end;
 }
+
+.login {
+  background-color: white;
+}
+
+.signin {
+  background-color: white;
+  color:white;
+}
