@@ -2,7 +2,7 @@ body,
 html {
   margin: 0;
   height: 100vh;
-  background-image: linear-gradient(to bottom, white, darkgrey);
+  background: rgb(25, 25, 25);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -10,21 +10,17 @@ html {
 #nav {
   position: fixed;
   top: 0;
-  height: 12vh;
+  height: 11vh;
   min-height: 60px;
   width: 100%;
-  background: black;
+  background: rgb(45, 45, 45);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 #main {
-  margin-top: 12vh;
-}
-
-p {
-  width: 200px;
+  margin-top: 11vh;
 }
 
 .auth-button-container {
