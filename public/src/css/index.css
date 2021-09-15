@@ -2,10 +2,22 @@ body,
 html {
   margin: 0;
   padding: 0;
-  height: 100%;
+  height: 100vh;
+  background-image: linear-gradient(to bottom, white, darkgrey);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
-#background {
-  height: 100%;
-  background-image: linear-gradient(to bottom, white, darkgrey);
+nav {
+  position: fixed;
+  top: 0;
+  height: 12vh;
+  width: 100%;
+  background: black;
+  display: flex;
+}
+
+p {
+  padding-top: 12vh;
+  width: 200px;
 }
