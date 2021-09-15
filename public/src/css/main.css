@@ -15,8 +15,6 @@ html {
   width: 100%;
   background: rgb(45, 45, 45);
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
   align-items: center;
 }
 
@@ -25,27 +23,70 @@ html {
 }
 
 .btn {
+  position: absolute;
   text-decoration: none;
-  height: 80%;
-  background: rgb(60, 60, 60);
+  width: 8%;
+  background: rgb(65, 65, 65);
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#login {
-  width: 10%;
+.btn:hover {
+  filter: brightness(115%);
 }
 
-#signup {
-  width: 10%;
+.btn:hover > p {
+  font-size: 3.1vh;
 }
 
 #logo {
   background: #000;
+  height: 80%;
   width: 13%;
-  margin-left: 5%;
+  left: 5%;
+}
+
+#calendar {
+  left: 23%;
+}
+
+#timer {
+  left: 30.5%;
+}
+
+#login {
+  height: 60%;
+  left: 76.5%;
+}
+
+#signup {
+  height: 60%;
+  left: 85%;
+}
+
+#settings {
+  position: absolute;
+  background: rgb(60, 60, 60);
+  border-radius: 50%;
+  height: 80%;
+  width: 4.5%;
+  left: 94.25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#settings-img {
+  height: 80%;
+  filter: brightness(120%);
+  transition: transform 1s;
+}
+
+#settings:hover > #settings-img {
+  filter: brightness(140%);
+  transform: rotateZ(120deg);
 }
 
 .navp {
@@ -55,7 +96,10 @@ html {
 }
 
 .page {
-  width: 8%;
+  height: 100%;
+  border-radius: 0;
+  width: 7%;
+  background: rgb(60, 60, 60);
 }
 
 ::-webkit-scrollbar {
