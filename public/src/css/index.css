@@ -15,6 +15,7 @@ html {
   width: 100%;
   background: rgb(45, 45, 45);
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
@@ -23,16 +24,21 @@ html {
   margin-top: 11vh;
 }
 
+#logo {
+  margin-left: 20px;
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  border-radius: 100%;
+}
+
 .auth-button-container {
-  margin: 4px;
-  justify-content: flex-end;
+  justify-self: flex-end;
 }
 
-.login {
+.btn { 
+  margin-right: 8px;
+  color: black;
+  border: solid gold;
   background-color: white;
-}
-
-.signin {
-  background-color: white;
-  color:white;
 }
