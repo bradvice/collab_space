@@ -20,20 +20,34 @@ html {
   align-items: center;
 }
 
+#main {
+  margin-top: 11vh;
+}
+
+.btn {
+  text-decoration: none;
+  height: 80%;
+  background: rgb(60, 60, 60);
+}
+
+p {
+  color: rgb(210, 210, 210);
+}
+
 ::-webkit-scrollbar {
-    width: 10px;
-    border-radius: 20px;
-  }
-  
+  width: 10px;
+  border-radius: 20px;
+}
+
 ::-webkit-scrollbar-track {
-    background: #ffffff00
-  }
-   
+  background: #ffffff00;
+}
+
 ::-webkit-scrollbar-thumb {
-    background: #8f8f8f;
-    border-radius: 20px;
-  }
+  background: #8f8f8f;
+  border-radius: 20px;
+}
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #888; 
-  }
+  background: #888;
+}
