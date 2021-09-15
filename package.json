@@ -2,9 +2,10 @@
   "name": "collab_space",
   "version": "1.0.0",
   "description": "collaboration space to work on projects together",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": ""
   },
   "repository": {
     "type": "git",
