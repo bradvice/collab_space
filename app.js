@@ -18,4 +18,8 @@ app.get('/', async (req, res) => {
     await res.render(`index`)
 });
 
+app.get('/auth', async (req, res) => {
+    await res.render('auth')
+});
+
 app.listen(port, () => console.info(`App available on ${site}`))
