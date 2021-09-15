@@ -6,22 +6,21 @@ html {
   background-image: linear-gradient(to bottom, white, darkgrey);
   background-repeat: no-repeat;
   background-attachment: fixed;
+  display: grid;
+  grid-template-rows: [nav-start] 12% [nav-end site-start];
 }
 
 nav {
   position: fixed;
-  top: 0;
-  height: 12vh;
-  width: 100%;
+  grid-row-start: nav-start;
+  grid-row-end: nav-end;
   background: black;
   display: flex;
 }
 
 p {
-  padding-top: 12vh;
   width: 200px;
 }
 
 .auth-button-container {
-  
 }
