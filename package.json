@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/bradvice/collab_space#readme",
   "dependencies": {
+    "deta": "^1.0.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1"
   },
