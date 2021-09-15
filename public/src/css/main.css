@@ -38,7 +38,7 @@ html {
 }
 
 .btn:hover > p {
-  font-size: 3.1vh;
+  font-size: 1.6vw;
 }
 
 #logo {
@@ -53,7 +53,7 @@ html {
 }
 
 #timer {
-  left: 30.5%;
+  left: 30.3%;
 }
 
 #login {
@@ -81,7 +81,7 @@ html {
 #settings-img {
   height: 80%;
   filter: brightness(120%);
-  transition: transform 1s;
+  transition: transform 0.8s;
 }
 
 #settings:hover > #settings-img {
@@ -92,7 +92,7 @@ html {
 .navp {
   color: rgb(210, 210, 210);
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 3vh;
+  font-size: 1.5vw;
 }
 
 .page {
