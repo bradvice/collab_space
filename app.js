@@ -22,8 +22,8 @@ app.get('/auth/login', async (req, res) => {
     await res.render('login')
 });
 
-app.get('/auth/signin', async (req, res) => {
-    await res.render('signin')
+app.get('/auth/signup', async (req, res) => {
+    await res.render('signup')
 });
 
 app.listen(port, () => console.info(`App available on ${site}`))
