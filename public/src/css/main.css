@@ -54,13 +54,13 @@ html {
 
 #login {
   height: 60%;
-  left: 76.5%;
-}
-
-#signup {
-  height: 60%;
   left: 85%;
 }
+
+/*#signup {
+  height: 60%;
+  left: 85%;
+}*/
 
 #settings {
   position: absolute;

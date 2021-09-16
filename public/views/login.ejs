@@ -15,7 +15,13 @@
       <a href="" class="btn page" id="calendar"><p class="navp">Calendar</p></a>
       <a href="" class="btn page" id="timer"><p class="navp">Timer</p></a>
       <a href="/login" class="btn" id="login"><p class="navp">Login</p></a>
-      <a href="/signup" class="btn" id="signup"><p class="navp">Sign Up</p></a>
+      <!--<a href="/signup" class="btn" id="signup"><p class="navp">Sign Up</p></a>-->
+      <a href="" id="settings"
+        ><img
+          src="https://imgr.search.brave.com/eSOjuLYC1ZzytbaZeEJ9hYc6o47tGjag3s9swOS8rWw/fit/512/512/ce/1/aHR0cHM6Ly93d3cu/aWNvbnNkYi5jb20v/aWNvbnMvZG93bmxv/YWQvZ3JheS9zZXR0/aW5ncy0zLTUxMi5w/bmc"
+          alt="settings"
+          id="settings-img"
+      /></a>
     </div>
     <div id="main">
       <div id="auth-container">
@@ -24,7 +30,7 @@
             type="text"
             class="auth-input"
             id="username-input"
-            placeholder="Enter Username..."
+            placeholder="Enter Email / Username..."
           />
           <input
             type="password"
@@ -32,7 +38,9 @@
             id="password-input"
             placeholder="Enter Password..."
           />
+          <p id="error">Password is incorrect</p>
           <button class="submitter" type="submit">Login</button>
+          <a href="/signup" id="signin">Don't have a Login? : Sign Up</a>
         </form>
       </div>
     </div>
