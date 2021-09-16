@@ -8,6 +8,7 @@
 .auth-container {
     background: #21262d;
     border: solid #21262d;
+    border-radius: 4px;
     height: 186.6px;
     width: 266px;
     display: flex;
