@@ -26,4 +26,11 @@ app.get('/signup', async (req, res) => {
     await res.render('signup')
 });
 
+app.post('/signup', async (req, res) => {
+    console.log(req.body)
+});
+
+app.post('/login', async (req, res) => {
+});
+
 app.listen(port, () => console.info(`App available on ${site}`))
