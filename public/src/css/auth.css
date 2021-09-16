@@ -6,7 +6,7 @@
 }
 
 #nav {
-    transition: filter 0.4s cubic-bezier(0.93, 0.07, 0.58, 1.1);
+  transition: filter 0.4s cubic-bezier(0.93, 0.07, 0.58, 1.1);
 }
 
 #auth-container {
