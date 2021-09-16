@@ -27,7 +27,7 @@ app.get('/signup', async (req, res) => {
 });
 
 app.post('/signup', async (req, res) => {
-    console.log(req.body)
+    console.log(req)
 });
 
 app.post('/login', async (req, res) => {
