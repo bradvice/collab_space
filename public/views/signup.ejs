@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="css/auth.css" type="text/css" />
     <link rel="stylesheet" href="css/main.css" type="text/css" />
     <link rel="stylesheet" href="css/signup.css" />
-    <script src="js/auth.js" async defer></script>
+    <script src="js/signup.js" async defer></script>
   </head>
   <body>
     <div id="nav">
-      <a href="http://localhost:3000" class="btn" id="logo"></a>
+      <a href="/" class="btn" id="logo"></a>
       <a href="" class="btn page" id="calendar"><p class="navp">Calendar</p></a>
       <a href="" class="btn page" id="timer"><p class="navp">Timer</p></a>
       <a href="/login" class="btn" id="login"><p class="navp">Login</p></a>
@@ -27,24 +27,38 @@
     </div>
     <div id="main">
       <div id="auth-container">
-        <form action="" method="POST" id="auth-form">
+        <form action="/signup" method="POST" id="auth-form">
           <input
             type="text"
             class="auth-input"
             id="username-input"
+            name="username"
+            placeholder="Enter Username..."
+            required
+          />
+          <input
+            type="email"
+            class="auth-input"
+            id="username-input"
+            name="email"
             placeholder="Enter Email..."
+            required
           />
           <input
             type="password"
             class="auth-input"
             id="password-input"
+            name="password"
             placeholder="Enter Password..."
+            required
           />
           <input
             type="password"
             class="auth-input"
             id="password-confirm"
+            name="passwordconf"
             placeholder="Confirm Password..."
+            required
           />
           <p id="error">Not the same password</p>
           <button class="submitter" type="submit">Sign Up</button>
