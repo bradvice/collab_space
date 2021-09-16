@@ -1,0 +1,16 @@
+.auth-input {
+  margin-top: 2%;
+}
+
+#username-input {
+  margin-top: 5%;
+}
+
+#error {
+  margin-top: 1%;
+  margin-bottom: 0;
+}
+
+.submitter {
+  margin-top: 0%;
+}
