@@ -18,10 +18,6 @@ html {
   align-items: center;
 }
 
-#main {
-  margin-top: 11vh;
-}
-
 .btn {
   position: absolute;
   text-decoration: none;
