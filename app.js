@@ -5,6 +5,8 @@ const dotenv = require('dotenv').config();
 const app = express();
 app.disable("x-powered-by");
 
+const deta = Deta(process.env.DETA_API_KEY);
+
 const port = 3000;
 const site = `http://localhost:${port}`;
 
