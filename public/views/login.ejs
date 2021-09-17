@@ -26,27 +26,29 @@
     </div>
     <div id="main">
       <div id="auth-container">
-        <form action="/login" method="POST" id="auth-form">
-          <input
-            type="text"
-            class="auth-input"
-            id="username-input"
-            name="username"
-            placeholder="Enter Email / Username..."
-            required
-          />
-          <input
-            type="password"
-            class="auth-input"
-            id="password-input"
-            name="password"
-            placeholder="Enter Password..."
-            required
-          />
-          <p id="error">Password is incorrect</p>
-          <button class="submitter" type="submit">Login</button>
-        </form>
-        <a href="/signup" id="signin">Don't have a Login? : Sign Up</a>
+        <div id="auth-shell">
+          <form action="/login" method="POST" id="auth-form">
+            <input
+              type="text"
+              class="auth-input"
+              id="username-input"
+              name="username"
+              placeholder="Enter Email / Username..."
+              required
+            />
+            <input
+              type="password"
+              class="auth-input"
+              id="password-input"
+              name="password"
+              placeholder="Enter Password..."
+              required
+            />
+            <p id="error">Password is incorrect</p>
+            <button class="submitter" type="submit">Login</button>
+          </form>
+          <a href="/signup" id="signin">Don't have a Login? : Sign Up</a>
+        </div>
       </div>
     </div>
   </body>
