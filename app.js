@@ -1,5 +1,6 @@
 const express = require("express");
 const sha256 = require('js-sha256');
+const dotenv = require('dotenv').config();
 
 const app = express();
 app.disable("x-powered-by");
@@ -49,6 +50,7 @@ try {
       let password = sha256(req.body.password);
       let passwordconf = sha256(req.body.passwordconf);
       let passConfed = (passwordconf == password) ? true:false;
+      
 
   });
 } catch (error) {}
