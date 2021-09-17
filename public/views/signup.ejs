@@ -4,11 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Document</title>
     <link rel="stylesheet" href="css/auth.css" type="text/css" />
     <link rel="stylesheet" href="css/main.css" type="text/css" />
     <link rel="stylesheet" href="css/signup.css" />
-    <script src="js/auth.js" async defer></script>
+    <script src="js/signup.js" async defer></script>
   </head>
   <body>
     <div id="nav">
@@ -26,24 +27,38 @@
     </div>
     <div id="main">
       <div id="auth-container">
-        <form action="" method="POST" id="auth-form">
+        <form action="/signup" method="POST" id="auth-form">
           <input
             type="text"
             class="auth-input"
             id="username-input"
+            name="username"
+            placeholder="Enter Username..."
+            required
+          />
+          <input
+            type="email"
+            class="auth-input"
+            id="username-input"
+            name="email"
             placeholder="Enter Email..."
+            required
           />
           <input
             type="password"
             class="auth-input"
             id="password-input"
+            name="password"
             placeholder="Enter Password..."
+            required
           />
           <input
             type="password"
             class="auth-input"
             id="password-confirm"
+            name="passwordconf"
             placeholder="Confirm Password..."
+            required
           />
           <p id="error">Not the same password</p>
           <button class="submitter" type="submit">Sign Up</button>

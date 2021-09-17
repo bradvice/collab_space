@@ -20,8 +20,10 @@
   "homepage": "https://github.com/bradvice/collab_space#readme",
   "dependencies": {
     "deta": "^1.0.0",
+    "dotenv": "^10.0.0",
     "ejs": "^3.1.6",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "js-sha256": "^0.9.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"

@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Document</title>
     <link rel="stylesheet" href="css/auth.css" type="text/css" />
     <link rel="stylesheet" href="css/main.css" type="text/css" />
-    <script src="js/auth.js" async defer></script>
+    <script src="js/login.js" async defer></script>
   </head>
   <body>
     <div id="nav">
-      <a href="" class="btn" id="logo"></a>
+      <a href="/" class="btn" id="logo"></a>
       <a href="" class="btn page" id="calendar"><p class="navp">Calendar</p></a>
       <a href="/timer" class="btn page" id="timer"><p class="navp">Timer</p></a>
       <a href="/login" class="btn" id="login"><p class="navp">Login</p></a>
@@ -25,23 +26,27 @@
     </div>
     <div id="main">
       <div id="auth-container">
-        <form action="/signup" method="POST" id="auth-form">
+        <form action="/login" method="POST" id="auth-form">
           <input
             type="text"
             class="auth-input"
             id="username-input"
+            name="username"
             placeholder="Enter Email / Username..."
+            required
           />
           <input
             type="password"
             class="auth-input"
             id="password-input"
+            name="password"
             placeholder="Enter Password..."
+            required
           />
           <p id="error">Password is incorrect</p>
           <button class="submitter" type="submit">Login</button>
-          <a href="/signup" id="signin">Don't have a Login? : Sign Up</a>
         </form>
+        <a href="/signup" id="signin">Don't have a Login? : Sign Up</a>
       </div>
     </div>
   </body>
