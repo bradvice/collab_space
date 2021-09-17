@@ -1,6 +1,6 @@
 const express = require("express");
 const sha256 = require('js-sha256');
-const dotenv = require('dotenv').config();
+require('dotenv').config();
 
 const app = express();
 app.disable("x-powered-by");
@@ -50,12 +50,28 @@ try {
 
 try {
   app.post("/signup", async (req, res) => {
-      let username = req.body.username;
-      let email = req.body.email;
+      const { username, email }  = req.body;
       let password = sha256(req.body.password);
       let passwordconf = sha256(req.body.passwordconf);
-      let passConfed = (passwordconf == password) ? true:false;
-
+      const passConfed = (passwordconf == password) ? true:false;
+      if (passConfed === true) {
+        const data = { key: username, email, password };
+        const user = await db.get(username)
+        if (user) {
+          res.status(202)
+          const userPromise = await db.put(data);
+          const userCheck = await db.get(username)
+          if (userCheck) {
+            res.status(201)
+          } else {
+            await res.status(503).render("signup.ejs", { error = "Service not available" });
+          }
+        } else {
+          await res.status(503).render("signup.ejs", { error = "Service not available" });
+        }
+      } else {
+        await res.render("signup.ejs", { error = "Passwords not matching" });
+      }
   });
 } catch (error) {}
 
@@ -64,6 +80,6 @@ try {
       let username = req.body.username;
       let password = sha256(req.body.password.toString());
   });
-} catch (error) {}
+} catch (error) {}  
 
 app.listen(port, () => console.info(`App available on ${site}`));
