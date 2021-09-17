@@ -5,12 +5,15 @@ const dotenv = require('dotenv').config();
 const app = express();
 app.disable("x-powered-by");
 
+const { Deta } = require('deta');
 const deta = Deta(process.env.DETA_API_KEY);
+const db = deta.Base('authBase');
 
 const port = 3000;
 const site = `http://localhost:${port}`;
 
 app.use(express.urlencoded({ extended: false}));
+app.use(express.json())
 
 app.use(express.static("public"));
 app.use("/views", express.static(`${__dirname}/public/views`));
@@ -52,7 +55,6 @@ try {
       let password = sha256(req.body.password);
       let passwordconf = sha256(req.body.passwordconf);
       let passConfed = (passwordconf == password) ? true:false;
-      
 
   });
 } catch (error) {}
