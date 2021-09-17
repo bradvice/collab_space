@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: space-evenly;
   padding: 0;
-  transition: transform 2s, width 2s;
+  transition: transform 1s, width 1s;
 }
 
 li {
