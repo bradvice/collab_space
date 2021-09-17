@@ -32,13 +32,13 @@ try {
 
 try {
   app.get("/login", async (req, res) => {
-    await res.render("login.ejs");
+    await res.render("login.ejs", { error: "" });
   });
 } catch (error) {}
 
 try {
   app.get("/signup", async (req, res) => {
-    await res.render("signup.ejs");
+    await res.render("signup.ejs", { error: "" });
   });
 } catch (error) {}
 
@@ -57,20 +57,21 @@ try {
       if (passConfed === true) {
         const data = { key: username, email, password };
         const user = await db.get(username)
-        if (user) {
+        if (!user) {
           res.status(202)
           const userPromise = await db.put(data);
           const userCheck = await db.get(username)
+          console.log(userCheck)
           if (userCheck) {
-            res.status(201)
+            res.status(201).render("index.ejs");gi
           } else {
-            await res.status(503).render("signup.ejs", { error = "Service not available" });
+            await res.status(503).render("signup.ejs", { error: "Service not available" });
           }
         } else {
-          await res.status(503).render("signup.ejs", { error = "Service not available" });
+          await res.status(503).render("signup.ejs", { error: "You already have an account" });
         }
       } else {
-        await res.render("signup.ejs", { error = "Passwords not matching" });
+        await res.render("signup.ejs", { error: "Passwords not matching" });
       }
   });
 } catch (error) {}
