@@ -63,7 +63,7 @@ try {
           const userCheck = await db.get(username)
           console.log(userCheck)
           if (userCheck) {
-            res.status(201).render("index.ejs");gi
+            res.status(201).redirect("/");
           } else {
             await res.status(503).render("signup.ejs", { error: "Service not available" });
           }
@@ -79,7 +79,14 @@ try {
 try {
   app.post("/login", async (req, res) => {
       let username = req.body.username;
+      const user = await db.get(username)
       let password = sha256(req.body.password.toString());
+      const cloudPassword = user.password;
+      const passConfed = (cloudPassword == password) ? true:false;
+      if (passConfed) {
+        res.status(201).redirect("/");
+      } else {
+      }
   });
 } catch (error) {}  
 
