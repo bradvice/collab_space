@@ -78,9 +78,9 @@ try {
 
 try {
   app.post("/login", async (req, res) => {
-      let username = req.body.username;
+      const { username } = req.body;
       const user = await db.get(username)
-      let password = sha256(req.body.password.toString());
+      const password = sha256(req.body.password.toString());
       const cloudPassword = user.password;
       const passConfed = (cloudPassword === password) ? true:false;
       if (passConfed) {
