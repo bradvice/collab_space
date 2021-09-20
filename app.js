@@ -53,7 +53,7 @@ try {
       const { username, email }  = req.body;
       let password = sha256(req.body.password);
       let passwordconf = sha256(req.body.passwordconf);
-      const passConfed = (passwordconf == password) ? true:false;
+      const passConfed = (passwordconf === password) ? true:false;
       if (passConfed === true) {
         const data = { key: username, email, password };
         const user = await db.get(username)
@@ -82,7 +82,7 @@ try {
       const user = await db.get(username)
       let password = sha256(req.body.password.toString());
       const cloudPassword = user.password;
-      const passConfed = (cloudPassword == password) ? true:false;
+      const passConfed = (cloudPassword === password) ? true:false;
       if (passConfed) {
         res.status(201).redirect("/");
       } else {
