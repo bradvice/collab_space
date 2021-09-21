@@ -14,7 +14,6 @@ function rotate_plus() {
     timer_container.appendChild(hour);
     timer_container.appendChild(semi1);
     timer_container.appendChild(minute);
-    console.log("plus");
   });
 }
 
@@ -40,7 +39,6 @@ function rotate_minus() {
     timer_container.appendChild(minute);
     timer_container.appendChild(semi2);
     timer_container.appendChild(second);
-    console.log("minus");
   });
 }
 

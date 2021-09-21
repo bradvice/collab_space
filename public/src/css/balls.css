@@ -1,0 +1,13 @@
+body {
+  overflow: hidden;
+}
+
+.ball {
+  position: absolute;
+  top: 50vh;
+  background-image: url(https://img.pngio.com/chrome-ball-png-image-free-download-searchpngcom-chrome-metal-png-2048_2048.png);
+  background-position: center;
+  background-size: cover;
+  height: 80px;
+  width: 80px;
+}
