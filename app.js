@@ -1,5 +1,6 @@
 const express = require("express");
 const sha256 = require('js-sha256');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
@@ -12,7 +13,7 @@ const db = deta.Base('authBase');
 const port = 3000;
 const site = `http://localhost:${port}`;
 
-app.use(express.urlencoded({ extended: false}));
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
 
 app.use(express.static("public"));
@@ -49,6 +50,12 @@ try {
 } catch (error) {}
 
 try {
+  app.get("/balls", async (req, res) => {
+    await res.render("balls.ejs");
+  });
+} catch (error) {}
+
+try {
   app.post("/signup", async (req, res) => {
       const { username, email }  = req.body;
       let password = sha256(req.body.password);
@@ -61,6 +68,7 @@ try {
           res.status(202)
           const userPromise = await db.put(data);
           const userCheck = await db.get(username)
+        
           console.log(userCheck)
           if (userCheck) {
             res.status(201).redirect("/");
@@ -83,6 +91,7 @@ try {
       const password = sha256(req.body.password.toString());
       const cloudPassword = user.password;
       const passConfed = (cloudPassword === password) ? true:false;
+
       if (passConfed) {
         res.status(201).redirect("/");
       } else {
