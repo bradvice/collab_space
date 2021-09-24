@@ -36,25 +36,35 @@ function makeKey(length) {
  return result;
 }
 
+let authorizedTokens = {}
+
 try {
   app.get("/", async (req, res) => {
     //check if user is authed, if not, render normal
-    console.log(req.signedCookies)
-    await res.render(`index.ejs`);
+    if (req.signedCookies.username) {
+      await res.render(`index.ejs`, { loggedIn: req.signedCookies.username });
+      console.log(req.signedCookies);
+    } else {
+      await res.render(`index.ejs`, { loggedIn: "Home" });
+    }
   });
 } catch (error) {}
 
 try {
   app.get("/login", async (req, res) => {
     //check if user is authed, if not, render normal
-    await res.render("login.ejs", { error: "" });
+    if (req.signedCookies.username) {
+      await res.render(`login.ejs`, { error: "", loggedIn: req.signedCookies.username });
+    } else {
+      await res.render("login.ejs", { error: "", loggedIn: "Home" });
+    }
   });
 } catch (error) {}
 
 try {
   app.get("/signup", async (req, res) => {
     //check if user is authed, if not, render normal
-    await res.render("signup.ejs", { error: "" });
+    await res.render("signup.ejs", { error: "", loggedIn: "Home" });
   });
 } catch (error) {}
 
@@ -101,13 +111,13 @@ try {
           if (userCheck) {
             res.status(201).redirect("/");
           } else {
-            await res.status(503).render("signup.ejs", { error: "Service not available" });
+            await res.status(503).render("signup.ejs", { error: "Service not available", loggedIn: "Home" });
           }
         } else {
-          await res.status(503).render("signup.ejs", { error: "You already have an account" });
+          await res.status(503).render("signup.ejs", { error: "You already have an account", loggedIn: "Home" });
         }
       } else {
-        await res.render("signup.ejs", { error: "Passwords not matching" });
+        await res.render("signup.ejs", { error: "Passwords not matching", loggedIn: "Home" });
       }
   });
 } catch (error) {}
@@ -119,7 +129,7 @@ try {
       const { username } = req.body;;
       const user = await db.get(username)
       if (user === null) {
-        await res.render("login.ejs", { error: "Wrong Username or Password" });
+        await res.render("login.ejs", { error: "Wrong Username or Password", loggedIn: "Home" });
       }
       console.log(user)
       const password = sha256(req.body.password.toString());
@@ -129,14 +139,17 @@ try {
       // if passwords match, create access token and store in res.local
       // send res to index for authentification
       if (passConfed) {
-        const sessionToken = makeKey(30);
-        res.cookie('sessionToken', sessionToken, {httpOnly: true, signed: true});
+        const sessionToken = makeKey(40);
+        res.cookie('sessionToken', sessionToken, {httpOnly: true, signed: true, expires: new Date(Date.now() + 900_000)});
+        res.cookie('username', username, {httpOnly: true, signed: true, expires: new Date(Date.now() + 900_000)});
+        authorizedTokens[username] = {sessionToken, expires: new Date(Date.now() + 900_000)};
+        console.log(authorizedTokens[username])
         res.status(201).redirect("/");
       } else {
-        await res.render("login.ejs", { error: "Wrong Username or Password" });
+        await res.render("login.ejs", { error: "Wrong Username or Password", loggedIn: "Home" });
       }
     } else {
-      res.render("login.ejs", { error: "You are already logged in" });
+      res.render("login.ejs", { error: "You are already logged in", loggedIn: "Home" });
     }
   });} catch (error) {}  
 
