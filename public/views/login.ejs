@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/auth.css" type="text/css" />
     <link rel="stylesheet" href="css/main.css" type="text/css" />
     <script src="js/login.js" async defer></script>
+    <script src="js/ejs.min.js"></script>
   </head>
   <body>
     <div id="nav">
@@ -45,7 +46,7 @@
               placeholder="Enter Password..."
               required
             />
-            <p id="error">Password is incorrect</p>
+            <p id="error"><%= error %></p>
             <button class="submitter" type="submit">Login</button>
           </form>
           <a href="/signup" id="signin">Don't have a Login? : Sign Up</a>

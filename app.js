@@ -15,6 +15,7 @@ const site = `http://localhost:${port}`;
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
+app.use(cookieParser("some shit"))
 
 app.use(express.static("public"));
 app.use("/views", express.static(`${__dirname}/public/views`));
@@ -38,6 +39,7 @@ function makeKey(length) {
 try {
   app.get("/", async (req, res) => {
     //check if user is authed, if not, render normal
+    console.log(req.signedCookies)
     await res.render(`index.ejs`);
   });
 } catch (error) {}
@@ -71,6 +73,13 @@ try {
 } catch (error) {}
 
 try {
+  app.get("/calendar", async (req, res) => {
+    //check if user is authed, if not, render normal
+    await res.render("calendar.ejs");
+  });
+} catch (error) {}
+
+try {
   app.post("/signup", async (req, res) => {
     //check if user is authed,if yes, redirect to index, if not, render normal
     // get user info from signup form
@@ -89,8 +98,6 @@ try {
           res.status(202)
           const userPromise = await db.put(data);
           const userCheck = await db.get(username)
-        
-          console.log(userCheck)
           if (userCheck) {
             res.status(201).redirect("/");
           } else {
@@ -107,22 +114,30 @@ try {
 
 try {
   app.post("/login", async (req, res) => {
+    if (!req.signedCookies.sessionToken){    
       // get data from login form
-      const { username } = req.body;
+      const { username } = req.body;;
       const user = await db.get(username)
+      if (user === null) {
+        await res.render("login.ejs", { error: "Wrong Username or Password" });
+      }
+      console.log(user)
       const password = sha256(req.body.password.toString());
-      // compare password in database with login password
       const cloudPassword = user.password;
+      // compare password in database with login password
       const passConfed = (cloudPassword === password) ? true:false;
       // if passwords match, create access token and store in res.local
       // send res to index for authentification
       if (passConfed) {
         const sessionToken = makeKey(30);
-        res.locals["sessionToken"] = sessionToken;
+        res.cookie('sessionToken', sessionToken, {httpOnly: true, signed: true});
         res.status(201).redirect("/");
       } else {
+        await res.render("login.ejs", { error: "Wrong Username or Password" });
       }
-  });
-} catch (error) {}  
+    } else {
+      res.render("login.ejs", { error: "You are already logged in" });
+    }
+  });} catch (error) {}  
 
 app.listen(port, () => console.info(`App available on ${site}`));
