@@ -131,7 +131,6 @@ try {
       if (user === null) {
         await res.render("login.ejs", { error: "Wrong Username or Password", loggedIn: "Home" });
       }
-      console.log(user)
       const password = sha256(req.body.password.toString());
       const cloudPassword = user.password;
       // compare password in database with login password
