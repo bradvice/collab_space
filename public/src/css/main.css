@@ -6,7 +6,7 @@ html {
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
-
+/* TODO: Set Styling for #loggedIn "Value"  */
 #nav {
   position: fixed;
   top: 0;

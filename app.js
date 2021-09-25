@@ -15,7 +15,7 @@ const site = `http://localhost:${port}`;
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
-app.use(cookieParser("some shit"))
+app.use(cookieParser("NotSoSecureHashValue")) // FIXME: Make Cookie Signature secure with process variables or so
 
 app.use(express.static("public"));
 app.use("/views", express.static(`${__dirname}/public/views`));
@@ -27,8 +27,8 @@ app.set("views", "./public/views");
 app.set("view engine", "ejs");
 
 function makeKey(length) {
-  let result           = '';
-  const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
   for ( let i = 0; i < length; i++ ) {
     result += characters.charAt(Math.floor(Math.random() * charactersLength));
@@ -37,6 +37,8 @@ function makeKey(length) {
 }
 
 let authorizedTokens = {}
+// TODO: Check access token on page load
+// TODO: Delete expired Tokens from list
 
 try {
   app.get("/", async (req, res) => {
@@ -54,7 +56,7 @@ try {
   app.get("/login", async (req, res) => {
     //check if user is authed, if not, render normal
     if (req.signedCookies.username) {
-      await res.render(`login.ejs`, { error: "", loggedIn: req.signedCookies.username });
+      await res.render("login.ejs", { error: "You are already logged in", loggedIn: req.signedCookies.username });
     } else {
       await res.render("login.ejs", { error: "", loggedIn: "Home" });
     }
@@ -64,28 +66,45 @@ try {
 try {
   app.get("/signup", async (req, res) => {
     //check if user is authed, if not, render normal
-    await res.render("signup.ejs", { error: "", loggedIn: "Home" });
-  });
+    if (req.signedCookies.username) {
+      await res.render(`signup.ejs`, { error: "You already have a logged in account", loggedIn: req.signedCookies.username });
+    } else {
+      await res.render(`signup.ejs`, { error: "", loggedIn: "Home" });
+    }});
 } catch (error) {}
 
 try {
   app.get("/timer", async (req, res) => {
     //check if user is authed, if not, render normal
-    await res.render("timer.ejs");
+    if (req.signedCookies.username) {
+      await res.render(`timer.ejs`, { loggedIn: req.signedCookies.username });
+    } else {
+      await res.render(`timer.ejs`, { loggedIn: "Home" });
+    }
   });
 } catch (error) {}
 
 try {
   app.get("/balls", async (req, res) => {
     //check if user is authed, if not, render normal
-    await res.render("balls.ejs");
+    if (req.signedCookies.username) {
+      await res.render(`balls.ejs`, { loggedIn: req.signedCookies.username });
+      console.log(req.signedCookies);
+    } else {
+      await res.render(`balls.ejs`, { loggedIn: "Home" });
+    }
   });
 } catch (error) {}
 
 try {
   app.get("/calendar", async (req, res) => {
     //check if user is authed, if not, render normal
-    await res.render("calendar.ejs");
+    if (req.signedCookies.username) {
+      await res.render(`balls.ejs`, { loggedIn: req.signedCookies.username });
+      console.log(req.signedCookies);
+    } else {
+      await res.render(`balls.ejs`, { loggedIn: "Home" });
+    }
   });
 } catch (error) {}
 
@@ -122,8 +141,10 @@ try {
   });
 } catch (error) {}
 
+
 try {
   app.post("/login", async (req, res) => {
+    // TODO: Get data from remember me button and set cookie expiration accordingly
     if (!req.signedCookies.sessionToken){    
       // get data from login form
       const { username } = req.body;;
@@ -139,8 +160,8 @@ try {
       // send res to index for authentification
       if (passConfed) {
         const sessionToken = makeKey(40);
-        res.cookie('sessionToken', sessionToken, {httpOnly: true, signed: true, expires: new Date(Date.now() + 900_000)});
-        res.cookie('username', username, {httpOnly: true, signed: true, expires: new Date(Date.now() + 900_000)});
+        res.cookie('sessionToken', sessionToken, {httpOnly: true, signed: true, expires: new Date(Date.now() + 900_000_000)});
+        res.cookie('username', username, {httpOnly: true, signed: true, expires: new Date(Date.now() + 900_000_000)});
         authorizedTokens[username] = {sessionToken, expires: new Date(Date.now() + 900_000)};
         console.log(authorizedTokens[username])
         res.status(201).redirect("/");
@@ -148,7 +169,7 @@ try {
         await res.render("login.ejs", { error: "Wrong Username or Password", loggedIn: "Home" });
       }
     } else {
-      res.render("login.ejs", { error: "You are already logged in", loggedIn: "Home" });
+      res.render("login.ejs", { error: "You are already logged in", loggedIn: req.signedCookies.username });
     }
   });} catch (error) {}  
 
