@@ -83,12 +83,12 @@ html {
 
 #settings-img {
   height: 80%;
-  filter: brightness(120%);
-  transition: transform 2.4s;
+  filter: brightness(110%);
+  transition: all 2.4s;
 }
 
 #settings:hover > #settings-img {
-  filter: brightness(140%);
+  filter: brightness(200%);
   transform: rotateZ(360deg);
 }
 
