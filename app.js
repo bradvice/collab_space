@@ -44,8 +44,14 @@ try {
   app.get("/", async (req, res) => {
     //check if user is authed, if not, render normal
     if (req.signedCookies.username) {
+      // Handles edge case for page loads after server restarts, where cookies haven't been timed out
+      if (authorizedTokens === {}) {
+        res.clearCookie('sessionToken')
+        res.clearCookie('username')
+        await res.render(`index.ejs`, { loggedIn: "Home" });
+      } else {
       await res.render(`index.ejs`, { loggedIn: req.signedCookies.username });
-      console.log(req.signedCookies);
+      }
     } else {
       await res.render(`index.ejs`, { loggedIn: "Home" });
     }
@@ -56,7 +62,14 @@ try {
   app.get("/login", async (req, res) => {
     //check if user is authed, if not, render normal
     if (req.signedCookies.username) {
+      // Handles edge case for page loads after server restarts, where cookies haven't been timed out
+      if (authorizedTokens === {}) {
+        res.clearCookie('sessionToken')
+        res.clearCookie('username')
+        await res.render("login.ejs", { error: "", loggedIn: "Home" });
+      } else {
       await res.render("login.ejs", { error: "You are already logged in", loggedIn: req.signedCookies.username });
+      }
     } else {
       await res.render("login.ejs", { error: "", loggedIn: "Home" });
     }
@@ -67,7 +80,14 @@ try {
   app.get("/signup", async (req, res) => {
     //check if user is authed, if not, render normal
     if (req.signedCookies.username) {
+      // Handles edge case for page loads after server restarts, where cookies haven't been timed out
+      if (authorizedTokens === {}) {
+        res.clearCookie('sessionToken')
+        res.clearCookie('username')
+        await res.render(`signup.ejs`, { error: "", loggedIn: "Home" });
+      } else {
       await res.render(`signup.ejs`, { error: "You already have a logged in account", loggedIn: req.signedCookies.username });
+      }
     } else {
       await res.render(`signup.ejs`, { error: "", loggedIn: "Home" });
     }});
@@ -77,7 +97,14 @@ try {
   app.get("/timer", async (req, res) => {
     //check if user is authed, if not, render normal
     if (req.signedCookies.username) {
+      // Handles edge case for page loads after server restarts, where cookies haven't been timed out
+      if (authorizedTokens === {}) {
+        res.clearCookie('sessionToken')
+        res.clearCookie('username')
+        await res.render(`timer.ejs`, { loggedIn: 'Home' });
+      } else {
       await res.render(`timer.ejs`, { loggedIn: req.signedCookies.username });
+      }
     } else {
       await res.render(`timer.ejs`, { loggedIn: "Home" });
     }
@@ -88,7 +115,14 @@ try {
   app.get("/balls", async (req, res) => {
     //check if user is authed, if not, render normal
     if (req.signedCookies.username) {
+      // Handles edge case for page loads after server restarts, where cookies haven't been timed out
+      if (authorizedTokens === {}) {
+        res.clearCookie('sessionToken')
+        res.clearCookie('username')
+        await res.render(`balls.ejs`, { loggedIn: 'Home' });
+      } else {
       await res.render(`balls.ejs`, { loggedIn: req.signedCookies.username });
+      }
       console.log(req.signedCookies);
     } else {
       await res.render(`balls.ejs`, { loggedIn: "Home" });
@@ -100,10 +134,17 @@ try {
   app.get("/calendar", async (req, res) => {
     //check if user is authed, if not, render normal
     if (req.signedCookies.username) {
-      await res.render(`balls.ejs`, { loggedIn: req.signedCookies.username });
+      // Handles edge case for page loads after server restarts, where cookies haven't been timed out
+      if (authorizedTokens === {}) {
+        res.clearCookie('sessionToken')
+        res.clearCookie('username')
+        await res.render(`calendar.ejs`, { loggedIn: 'Home' });
+      } else {
+      await res.render(`calendar.ejs`, { loggedIn: req.signedCookies.username });
+      }
       console.log(req.signedCookies);
     } else {
-      await res.render(`balls.ejs`, { loggedIn: "Home" });
+      await res.render(`calendar.ejs`, { loggedIn: "Home" });
     }
   });
 } catch (error) {}
@@ -111,6 +152,7 @@ try {
 try {
   app.post("/signup", async (req, res) => {
     //check if user is authed,if yes, redirect to index, if not, render normal
+    if (!req.signedCookies.sessionToken){
     // get user info from signup form
       const { username, email }  = req.body;
       let password = sha256(req.body.password);
@@ -138,6 +180,16 @@ try {
       } else {
         await res.render("signup.ejs", { error: "Passwords not matching", loggedIn: "Home" });
       }
+    } else {
+      // Handles edge case for page loads after server restarts, where cookies haven't been timed out
+      if (authorizedTokens === {}) {
+        res.clearCookie('sessionToken')
+        res.clearCookie('username')
+        await res.render("signup.ejs", { error: "", loggedIn: "Home" });
+      } else {
+      await res.render("signup.ejs", { error: "You are already logged in", loggedIn: req.signedCookies.username });
+      }
+    }
   });
 } catch (error) {}
 
@@ -169,8 +221,14 @@ try {
         await res.render("login.ejs", { error: "Wrong Username or Password", loggedIn: "Home" });
       }
     } else {
-      res.render("login.ejs", { error: "You are already logged in", loggedIn: req.signedCookies.username });
-    }
-  });} catch (error) {}  
+      // Handles edge case for page loads after server restarts, where cookies haven't been timed out
+      if (authorizedTokens === {}) {
+        res.clearCookie('sessionToken')
+        res.clearCookie('username')
+        await res.render("login.ejs", { error: "", loggedIn: "Home" });
+      } else {
+      await res.render("login.ejs", { error: "You are already logged in", loggedIn: req.signedCookies.username });
+      }}
+  })} catch (error) {}  
 
 app.listen(port, () => console.info(`App available on ${site}`));
