@@ -7,6 +7,10 @@ html {
   background-attachment: fixed;
 }
 /* TODO: Set Styling for #loggedIn "Value"  */
+#loggedIn {
+  color: white;
+}
+
 #nav {
   position: fixed;
   top: 0;
@@ -38,7 +42,7 @@ html {
 }
 
 #logo {
-  background: #000;
+  background: rgb(60 60 60);
   height: 80%;
   width: 13%;
   left: 5%;
