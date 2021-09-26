@@ -83,7 +83,7 @@ html {
 
 #settings-img {
   height: 80%;
-  filter: brightness(110%);
+  filter: brightness(100%);
   transition: all 2.4s;
 }
 
