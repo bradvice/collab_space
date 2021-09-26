@@ -17,7 +17,7 @@ const site = `http://localhost:${port}`;
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json())
-app.use(cookieParser("NotSoSecureHashValue")) // FIXME: Make Cookie Signature secure with process variables or so
+app.use(cookieParser(process.env.COOKIE_SIGNATURE)) // FIXME: Make Cookie Signature env variable bit more secure lol
 
 app.use(express.static("public"));
 app.use("/views", express.static(`${__dirname}/public/views`));
