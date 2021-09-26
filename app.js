@@ -1,10 +1,12 @@
 const express = require("express");
 const sha256 = require('js-sha256');
+const cors = require('cors');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
-app.disable("x-powered-by");
+//app.use(helmet());
 
 const { Deta } = require('deta');
 const deta = Deta(process.env.DETA_API_KEY);
@@ -19,6 +21,7 @@ app.use(cookieParser("NotSoSecureHashValue")) // FIXME: Make Cookie Signature se
 
 app.use(express.static("public"));
 app.use("/views", express.static(`${__dirname}/public/views`));
+app.use("/src", express.static(`${__dirname}/public/images`));
 app.use("/src", express.static(`${__dirname}/public/src`));
 app.use("/js", express.static(`${__dirname}/public/src/js`));
 app.use("/css", express.static(`${__dirname}/public/src/css`));
@@ -36,9 +39,9 @@ function makeKey(length) {
  return result;
 }
 
-let authorizedTokens = {}
 // TODO: Check access token on page load
 // TODO: Delete expired Tokens from list
+let authorizedTokens = {}
 
 try {
   app.get("/", async (req, res) => {
@@ -204,7 +207,7 @@ try {
       if (user === null) {
         await res.render("login.ejs", { error: "Wrong Username or Password", loggedIn: "Home" });
       }
-      const password = sha256(req.body.password.toString());
+      const password = sha256(req.body.password.toString()); // FIXME: Perform Input Validation + add a Salt
       const cloudPassword = user.password;
       // compare password in database with login password
       const passConfed = (cloudPassword === password) ? true:false;
@@ -212,6 +215,8 @@ try {
       // send res to index for authentification
       if (passConfed) {
         const sessionToken = makeKey(40);
+        // FIXME: Add the <secure> flag to cookies
+        // FIXME: Add browser checks for browsers with tight cookie security
         res.cookie('sessionToken', sessionToken, {httpOnly: true, signed: true, expires: new Date(Date.now() + 900_000_000)});
         res.cookie('username', username, {httpOnly: true, signed: true, expires: new Date(Date.now() + 900_000_000)});
         authorizedTokens[username] = {sessionToken, expires: new Date(Date.now() + 900_000)};
