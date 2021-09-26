@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
-//app.use(helmet());
+app.use(helmet());
 
 const { Deta } = require('deta');
 const deta = Deta(process.env.DETA_API_KEY);
