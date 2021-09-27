@@ -45,6 +45,7 @@ html {
   height: 80%;
   width: 13%;
   left: 5%;
+  overflow: hidden;
 }
 
 #calendar {
