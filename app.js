@@ -4,6 +4,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+let Nightmare = require("nightmare");
+let nightmare = Nightmare({ show: false });
 
 const app = express();
 app.use(helmet());
@@ -138,12 +140,49 @@ try {
     //check if user is authed, if not, render normal
     if (req.signedCookies.username) {
       // Handles edge case for page loads after server restarts, where cookies haven't been timed out
-      if (authorizedTokens === {}) {
+      if (authorizedTokens !== {}) {
+      nightmare
+        .goto("https://intranet.tam.ch/kbw/timetable/classbook")
+        .type('form[action*="/kbw"] [name=loginuser]', process.env.loginuser)
+        .type('form[action*="/kbw"] [name=loginpassword]', process.env.loginpassword)
+        .click("#login-dialog > form.login-form.showForm > div:nth-child(1) > button")
+        .wait(
+          "#tta-timetable-scheduler > table > tbody > tr:nth-child(2) > td:nth-child(2) > div > div:nth-child(3) > div.in-event-wrap.in-event-type-lesson"
+        )
+        .evaluate(() => {
+          return document.querySelector(
+            "#tta-timetable-scheduler > table > tbody > tr:nth-child(2) > td:nth-child(2) > div"
+          ).innerHTML;
+        })
+        .end()
+        .then(async (result) => {
+          const stringlessons = result.split('class="k-event k-event-inverse"');
+          var lessons = [];
+          for (let i = 1; i < stringlessons.length; i++) {
+            var lesson = {};
+            const parts = stringlessons[i].split(">");
+            lesson.subject = /\b[a-zA-Z]+/.exec(parts[10])[0];
+            lesson.time = /\b[\d+:\d+-\d+:\d+]+/.exec(parts[12])[0];
+            lesson.teacher = /[a-zA-Z]+[, a-zA-Z]/.exec(parts[16])[0];
+            lesson.room = /[A-Z\d]/.exec(parts[20])[0];
+            lesson.type = parts[7].substr(46, 1);
+            if (lesson.type === "c" && !/^\n/.test(parts[22])) {
+              lesson.desc = parts[22].substr(0, parts[22].length - 6);
+            }
+            lessons.push(lesson);
+          }
+          //console.log({ lessons });
+          //console.log();
+          console.log(lessons)
+          await res.render(`calendar.ejs`, { loggedIn: req.signedCookies.username });
+        })
+        .catch((error) => {
+          console.error("Search failed:", error);
+        });
+      } else {
         res.clearCookie('sessionToken')
         res.clearCookie('username')
         await res.render(`calendar.ejs`, { loggedIn: 'Home' });
-      } else {
-      await res.render(`calendar.ejs`, { loggedIn: req.signedCookies.username });
       }
       console.log(req.signedCookies);
     } else {
