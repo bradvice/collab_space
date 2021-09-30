@@ -141,6 +141,8 @@ try {
     if (req.signedCookies.username) {
       // Handles edge case for page loads after server restarts, where cookies haven't been timed out
       if (authorizedTokens !== {}) {
+        //FIXME: Create a skeleton or a prerender for the callendar
+        //FIXME: Start getting data earlier
       nightmare
         .goto("https://intranet.tam.ch/kbw/timetable/classbook")
         .type('form[action*="/kbw"] [name=loginuser]', process.env.loginuser)
@@ -194,6 +196,7 @@ try {
 try {
   app.post("/signup", async (req, res) => {
     //check if user is authed,if yes, redirect to index, if not, render normal
+    //FIXME: Also get intranet user loggin, password enters later in popup or so
     if (!req.signedCookies.sessionToken){
     // get user info from signup form
       const { username, email }  = req.body;
