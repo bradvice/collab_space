@@ -100,8 +100,8 @@ html {
 }
 
 .page {
-  height: 100%;
-  border-radius: 0;
+  height: 70%;
+  border-radius: 5;
   width: 7%;
   background: rgb(60, 60, 60);
 }

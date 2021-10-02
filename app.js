@@ -224,8 +224,8 @@ try {
         }
       } else {
         await res.render("signup.ejs", { error: "Passwords not matching", loggedIn: "Home" });
-      }
-    } else {
+        }
+      } else {
       // Handles edge case for page loads after server restarts, where cookies haven't been timed out
       if (authorizedTokens === {}) {
         res.clearCookie('sessionToken')
@@ -276,6 +276,6 @@ try {
       } else {
       await res.render("login.ejs", { error: "You are already logged in", loggedIn: req.signedCookies.username });
       }}
-  })} catch (error) {}  
+  })} catch (error) {}
 
 app.listen(port, () => console.info(`App available on ${site}`));

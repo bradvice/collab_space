@@ -29,13 +29,16 @@
       <div id="auth-container">
         <div id="auth-shell">
           <form action="/login" method="POST" id="auth-form">
-            <!-- TODO: Add a remember me button-->
             <input
               type="text"
               class="auth-input"
               id="username-input"
               name="username"
               placeholder="Enter Username..."
+              minlength="2"
+              maxlength="18"
+              autofocus
+              autocomplete="username"
               required
             />
             <input
@@ -43,9 +46,13 @@
               class="auth-input"
               id="password-input"
               name="password"
-              placeholder="Enter Password..."
+              placeholder="Enter Password"
               required
             />
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="rememberme"/>
+              <label for="#rememberme" id="rememberme-label">Remember me (less secure)</label>
+            </div>
             <p id="error"><%= error %></p>
             <button class="submitter" type="submit">Login</button>
           </form>
