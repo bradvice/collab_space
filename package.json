@@ -20,7 +20,7 @@
   "homepage": "https://github.com/bradvice/collab_space#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "deta": "^1.0.0",
     "dotenv": "^10.0.0",
